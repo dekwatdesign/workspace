@@ -96,10 +96,10 @@ require './configs/database.php';
 
     <style>
         .sidebar {
-            top: 0;
+            bottom: 0;
             width: 100%;
-            max-width: 300px;
-            height: 100%;
+            max-width: 350px;
+            height: calc(100% - 6rem);
             padding: 1rem;
             position: fixed;
             z-index: 2;
@@ -107,7 +107,7 @@ require './configs/database.php';
 
         .sidebar:not(.active) {
             left: -100%;
-            transition: all 1s ease-out;
+            transition: all 0.5s ease-out;
         }
 
         .sidebar.active {
@@ -117,9 +117,10 @@ require './configs/database.php';
 
         @media (min-width: 992px) {
             .sidebar {
-                width: 300px;
-                min-width: 300px;
+                width: 350px;
+                min-width: 350px;
                 position: relative;
+                height: 100%;
             }
 
             .sidebar:not(.active),
@@ -169,16 +170,19 @@ require './configs/database.php';
             justify-content: start;
             align-items: start;
             padding: 1rem;
+            gap: 0.5rem;
         }
 
-        .menu-item {
+        /* .menu-item {
             width: 100%;
-            padding: 0.5rem 0;
+            padding: 0.5rem;
             display: flex;
             flex-direction: row;
             gap: 0.3rem;
             justify-content: space-between;
-        }
+            border-radius: 0.5rem;
+            cursor: pointer;
+        } */
 
         .menu-title {
             width: 100%;
@@ -209,9 +213,13 @@ require './configs/database.php';
             display: none;
         }
 
+        /* .menu-item:hover {
+            background: var(--bs-gray-300);
+        }
+
         .menu-item:hover .menu-toolbar a {
             display: flex;
-        }
+        } */
     </style>
 
     <style>
@@ -233,6 +241,12 @@ require './configs/database.php';
             flex-direction: column;
             justify-content: space-between;
         }
+
+        .btn-group-ssm>.btn.btn-icon,
+        .btn.btn-icon.btn-ssm {
+            height: calc(1em + 1rem + 2px);
+            width: calc(1em + 1rem + 2px);
+        }
     </style>
 
     <style>
@@ -248,7 +262,7 @@ require './configs/database.php';
     </style>
 
     <div class="d-flex flex-column h-100">
-        <div class="mnav">
+        <div class="mnav" id="kt_header">
             <div class="mnav-bar">
                 <div class="mnav-logo">
                     <button onclick="toggleMenu()" class="btn btn-sm btn-icon btn-light-primary d-block d-lg-none">
@@ -257,12 +271,12 @@ require './configs/database.php';
                     <img alt="Logo" src="./assets/logo/logo_workspace.svg" class="h-25px">
                 </div>
                 <div class="mnav-tool">
-                    <a href="#" class="btn btn-sm btn-icon btn-secondary pulse">
+                    <a href="#" class="btn btn-sm btn-icon btn-secondary position-relative">
                         <i class="fa-solid fa-bell fa-shake fs-2"></i>
                         <span
                             class="position-absolute top-0 start-100 translate-middle badge badge-sm badge-circle badge-danger">5</span>
                     </a>
-                    <a href="#" class="btn btn-sm btn-icon btn-secondary pulse">
+                    <a href="#" class="btn btn-sm btn-icon btn-secondary">
                         <i class="fa-solid fa-gear fs-2"></i>
                     </a>
                 </div>
@@ -272,7 +286,7 @@ require './configs/database.php';
             <div class="sidebar">
 
                 <div class="sidebar-body">
-                    <div class="sidebar-profile">
+                    <div class="sidebar-profile" id="kt_example_js_header">
                         <div class="w-100 d-flex flex-row justify-content-between align-items-center gap-3">
                             <div class="d-flex flex-row gap-2">
                                 <div class="symbol symbol-40px">
@@ -290,24 +304,228 @@ require './configs/database.php';
                             </div>
                         </div>
                     </div>
-                    <div class="sidebar-menus">
-                        <div class="menu-item">
-                            <div class="menu-title fw-bold">Teamspace</div>
-                            <div class="menu-toolbar">
-                                <a href=""><i class="fa-solid fa-ellipsis fs-4"></i></a>
-                                <a href=""><i class="fa-regular fa-square-plus fs-4"></i></a>
+                    <div class="sidebar-menus hover-scroll-y"
+                        data-kt-scroll="true"
+                        data-kt-scroll-height="auto"
+                        data-kt-scroll-wrappers="#kt_example_js_content"
+                        data-kt-scroll-dependencies="#kt_example_js_header, #kt_example_js_footer, #kt_header"
+                        data-kt-scroll-offset="0px">
+
+                        <div id="kt_example_js_content" class="menu menu-rounded menu-column menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 menu-arrow-gray-500 menu-state-bg fw-semibold" data-kt-menu="true">
+                            <div class="menu-item menu-sub-indention menu-accordion" data-kt-menu-trigger="click">
+                                <a href="#" class="menu-link py-3">
+                                    <span class="menu-icon">
+                                        <i class="fa-solid fa-briefcase fs-3"></i>
+                                    </span>
+                                    <span class="menu-title">Teamspace</span>
+                                    <span>
+                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                        </button>
+                                    </span>
+                                    <span>
+                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                            <i class="fa-solid fa-plus fs-3"></i>
+                                        </button>
+                                    </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+
+                                <div class="menu-sub menu-sub-accordion pt-3">
+
+                                    <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
+                                        <!--begin::Menu link-->
+                                        <a href="#" class="menu-link py-3">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Yuwa - IT</span>
+                                            <span>
+                                                <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                    <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                </button>
+                                            </span>
+                                            <span>
+                                                <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                    <i class="fa-solid fa-plus fs-3"></i>
+                                                </button>
+                                            </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <!--end::Menu link-->
+
+                                        <!--begin::Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion pt-3">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Example Link</span>
+                                                    <span>
+                                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                        </button>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Example Link</span>
+                                                    <span>
+                                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                        </button>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Example Link</span>
+                                                    <span>
+                                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                        </button>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                        <!--end::Menu sub-->
+                                    </div>
+
+                                    <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
+                                        <a href="#" class="menu-link py-3">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Dekwatdesign</span>
+                                            <span>
+                                                <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                    <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                </button>
+                                            </span>
+                                            <span>
+                                                <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                    <i class="fa-solid fa-plus fs-3"></i>
+                                                </button>
+                                            </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="menu-sub menu-sub-accordion pt-3">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Example Link</span>
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Example Link</span>
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Example Link</span>
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="menu-item">
-                            <a class="" href="">
-                                <span class="menu-title">Autosize</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <span class="text-muted mb-0 fs-7 fw-bold">Private</span>
+
+                            <div class="menu-item menu-link-indention menu-accordion" data-kt-menu-trigger="click">
+                                <!--begin::Menu link-->
+                                <a href="#" class="menu-link py-3">
+                                    <span class="menu-icon">
+                                        <i class="fas fa-lock fs-3"></i>
+                                    </span>
+                                    <span class="menu-title">Private</span>
+                                    <span>
+                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                        </button>
+                                    </span>
+                                    <span>
+                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                            <i class="fa-solid fa-plus fs-3"></i>
+                                        </button>
+                                    </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <!--end::Menu link-->
+
+                                <!--begin::Menu sub-->
+                                <div class="menu-sub menu-sub-accordion pt-3">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <a href="#" class="menu-link py-3 active">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Example Link</span>
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <a href="#" class="menu-link py-3">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Example Link</span>
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <a href="#" class="menu-link py-3">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Example Link</span>
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu sub-->
+                            </div>
+
                         </div>
                     </div>
-                    <div class="sidebar-footer">
+                    <div class="sidebar-footer" id="kt_example_js_footer">
                         <span class="text-gray-600 text-center">Create by YUWA-IT</span>
                     </div>
                 </div>
@@ -323,12 +541,21 @@ require './configs/database.php';
 
     <script src="./assets/js/jquery-3.7.1.min.js"></script>
     <script src="./assets/js/scripts.bundle.js"></script>
-
     <script>
+
+
+        $(document).ready(function(){
+            $( ".menu-link" ).accordion({ active: false });
+        })
+
+        $(".menu-item button").off().on('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
         function toggleMenu() {
             $('.sidebar').hasClass('active') ? $('.sidebar').removeClass('active') : $('.sidebar').addClass('active');
         }
-
     </script>
 
 </body>
