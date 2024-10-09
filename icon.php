@@ -188,6 +188,7 @@
         function bindIconClick() {
             $('.icon-select').on('click', function() {
                 let selectedIcon = $(this).html(); // Get the inner HTML of the selected icon (SVG)
+                navigator.clipboard.writeText(selectedIcon);
                 alert('Selected Icon: ' + selectedIcon);
             });
         }
@@ -202,6 +203,7 @@
         function bindEmojiClick() {
             $('.emoji-item').on('click', function() {
                 let selectedEmoji = $(this).html();
+                navigator.clipboard.writeText(selectedEmoji);
                 alert('Selected Emoji: ' + selectedEmoji);
             });
         }

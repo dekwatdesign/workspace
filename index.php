@@ -28,6 +28,8 @@ require './configs/database.php';
     <link href="./assets/css/fonts.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/custom.css" rel="stylesheet" type="text/css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
     <style>
         :root {
             --mm-shadow-1: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -334,7 +336,7 @@ require './configs/database.php';
                                 <div class="menu-sub menu-sub-accordion pt-3">
 
                                     <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
-                                        <!--begin::Menu link-->
+
                                         <a href="#" class="menu-link py-3">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
@@ -352,33 +354,13 @@ require './configs/database.php';
                                             </span>
                                             <span class="menu-arrow"></span>
                                         </a>
-                                        <!--end::Menu link-->
 
-                                        <!--begin::Menu sub-->
                                         <div class="menu-sub menu-sub-accordion pt-3">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item">
-                                                <a href="#" class="menu-link py-3">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                    <span class="menu-title">Example Link</span>
-                                                    <span>
-                                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
-                                                            <i class="fa-regular fa-ellipsis fs-3"></i>
-                                                        </button>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <!--end::Menu item-->
 
-                                            <!--begin::Menu item-->
                                             <div class="menu-item">
                                                 <a href="#" class="menu-link py-3">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                    <span class="menu-title">Example Link</span>
+                                                    <span class="menu-bullet fs-2">🚩</span>
+                                                    <span class="menu-title">Ticket Cases</span>
                                                     <span>
                                                         <button class="btn btn-ssm btn-icon btn-secondary me-2">
                                                             <i class="fa-regular fa-ellipsis fs-3"></i>
@@ -386,15 +368,11 @@ require './configs/database.php';
                                                     </span>
                                                 </a>
                                             </div>
-                                            <!--end::Menu item-->
 
-                                            <!--begin::Menu item-->
                                             <div class="menu-item">
                                                 <a href="#" class="menu-link py-3">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                    <span class="menu-title">Example Link</span>
+                                                    <span class="menu-bullet fs-2">🤝</span>
+                                                    <span class="menu-title">ประชุม/อบรม (IT เข้าร่วม)</span>
                                                     <span>
                                                         <button class="btn btn-ssm btn-icon btn-secondary me-2">
                                                             <i class="fa-regular fa-ellipsis fs-3"></i>
@@ -402,9 +380,31 @@ require './configs/database.php';
                                                     </span>
                                                 </a>
                                             </div>
-                                            <!--end::Menu item-->
+
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet fs-2">🚀</span>
+                                                    <span class="menu-title">Projects</span>
+                                                    <span>
+                                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                        </button>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link py-3">
+                                                    <span class="menu-bullet fs-2">👮</span>
+                                                    <span class="menu-title">เจ้าหน้าที่</span>
+                                                    <span>
+                                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                                            <i class="fa-regular fa-ellipsis fs-3"></i>
+                                                        </button>
+                                                    </span>
+                                                </a>
+                                            </div>
+
                                         </div>
-                                        <!--end::Menu sub-->
                                     </div>
 
                                     <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
@@ -533,7 +533,7 @@ require './configs/database.php';
             </div>
             <div class="content">
                 <div class="content-body">
-
+                    <div id="table-container"></div>
                 </div>
             </div>
         </div>
@@ -541,12 +541,86 @@ require './configs/database.php';
 
     <script src="./assets/js/jquery-3.7.1.min.js"></script>
     <script src="./assets/js/scripts.bundle.js"></script>
+
+    
+
     <script>
+        $(document).ready(function() {
+            $(".menu-link").accordion({
+                active: false
+            });
+
+            const data = [{
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 28
+                },
+                {
+                    firstName: 'Jane',
+                    lastName: 'Smith',
+                    age: 34
+                },
+                {
+                    firstName: 'Sara',
+                    lastName: 'Brown',
+                    age: 22
+                }
+            ];
+
+            // กำหนด columns สำหรับ TanStack Table
+            const columns = [{
+                    accessorKey: 'firstName',
+                    header: 'First Name',
+                },
+                {
+                    accessorKey: 'lastName',
+                    header: 'Last Name',
+                },
+                {
+                    accessorKey: 'age',
+                    header: 'Age',
+                }
+            ];
+            // สร้างตารางโดยใช้ TanStack Table
+            const table = new window["@tanstack/table-core"].Table({
+                data,
+                columns,
+                getCoreRowModel: window["@tanstack/table-core"].getCoreRowModel(),
+            });
+
+            // ฟังก์ชันในการสร้าง HTML สำหรับแสดงผลตาราง
+            function renderTable() {
+                let tableHtml = '<table><thead><tr>';
+
+                // สร้างหัวตาราง
+                table.getHeaderGroups().forEach(headerGroup => {
+                    headerGroup.headers.forEach(header => {
+                        tableHtml += `<th>${header.column.columnDef.header}</th>`;
+                    });
+                });
+
+                tableHtml += '</tr></thead><tbody>';
+
+                // สร้างแถวข้อมูล
+                table.getRowModel().rows.forEach(row => {
+                    tableHtml += '<tr>';
+                    row.getVisibleCells().forEach(cell => {
+                        tableHtml += `<td>${cell.getValue()}</td>`;
+                    });
+                    tableHtml += '</tr>';
+                });
+
+                tableHtml += '</tbody></table>';
+
+                // นำตารางไปแสดงใน div ที่กำหนด
+                $('#table-container').html(tableHtml);
+            }
+
+            // เรียกฟังก์ชันเพื่อแสดงผลตาราง
+            renderTable();
 
 
-        $(document).ready(function(){
-            $( ".menu-link" ).accordion({ active: false });
-        })
+        });
 
         $(".menu-item button").off().on('click', function(event) {
             event.preventDefault();
