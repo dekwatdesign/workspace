@@ -14,80 +14,13 @@
     <link href="./assets/css/fonts.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/custom.css" rel="stylesheet" type="text/css" />
 
-    <style>
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
 
-        thead {
-            background-color: #343a40;
-            color: white;
-            cursor: pointer;
-        }
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.6.3/css/colReorder.dataTables.min.css">
 
-        thead th {
-            padding: 12px;
-            text-align: left;
-            font-size: 16px;
-            border-right: 1px solid #dee2e6;
-            /* เส้นขั้นระหว่างคอลัมน์ */
-        }
-
-        thead th:last-child {
-            border-right: none;
-            /* เอาเส้นขอบออกจากคอลัมน์สุดท้าย */
-        }
-
-        tbody td {
-            padding: 10px;
-            font-size: 14px;
-            color: #343a40;
-            border-right: 1px solid #dee2e6;
-            /* เส้นขั้นระหว่างคอลัมน์ */
-            border-bottom: 1px solid #dee2e6;
-            /* เส้นขั้นระหว่างแถว */
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-            /* เอาเส้นขอบล่างออกจากแถวสุดท้าย */
-        }
-
-        tbody td:last-child {
-            border-right: none;
-            /* เอาเส้นขอบออกจากคอลัมน์สุดท้าย */
-        }
-
-        tbody tr:hover {
-            background-color: #e9ecef;
-            cursor: pointer;
-        }
-
-        tfoot td {
-            padding: 12px;
-            background-color: #343a40;
-            color: white;
-            text-align: right;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            border-right: none;
-            /* เอาเส้นขอบออกจากคอลัมน์สุดท้าย */
-        }
-    </style>
-
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.6.3/css/colReorder.dataTables.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/colreorder/1.6.3/js/dataTables.colReorder.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.6.3/js/dataTables.colReorder.min.js"></script>
 </head>
 
 <body>

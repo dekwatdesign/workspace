@@ -16,9 +16,9 @@ require './configs/database.php';
     <link rel="manifest" href="./assets/logo/site.webmanifest">
 
     <!--begin::Vendor Stylesheets(used for this page only)-->
-    <link href="./assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/datatables/datatables.bundle.css" />
+    
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="./assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
@@ -27,8 +27,6 @@ require './configs/database.php';
     <link href="./assets/css/fontawesome.min.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/fonts.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/custom.css" rel="stylesheet" type="text/css" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
     <style>
         :root {
@@ -225,20 +223,31 @@ require './configs/database.php';
     </style>
 
     <style>
+        .main {
+            display: flex;
+            flex-direction: row;
+            max-height: calc(100% - 6rem);
+        }
+
         .content {
+            padding: 1rem;
             width: 100%;
             height: 100%;
-            padding: 1rem;
+        }
+
+        @media (min-width: 992px) {
+            .content {
+                padding: 1rem 1rem 1rem 0;
+                width: calc(100% - 350px);
+            }
         }
 
         .content .content-body {
+            padding: 2rem;
             background-color: white;
             height: 100%;
             box-shadow: var(--mm-shadow-1);
             border-radius: 1.5rem;
-        }
-
-        .content-body {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -284,7 +293,7 @@ require './configs/database.php';
                 </div>
             </div>
         </div>
-        <div class="d-flex flex-row h-100">
+        <div class="main">
             <div class="sidebar">
 
                 <div class="sidebar-body">
@@ -531,9 +540,39 @@ require './configs/database.php';
                 </div>
 
             </div>
-            <div class="content">
+            <div class="content hover-scroll-x">
                 <div class="content-body">
-                    <div id="table-container"></div>
+                    <div class="hover-scroll-x">
+                        <table id="example" class="table table-row-bordered gy-5">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+
+                                $sql = "SELECT name, position, office, age, start_date, salary FROM users";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr><td>" . $row["name"] . "</td><td>" . $row["position"] . "</td><td>" . $row["office"] . "</td><td>" . $row["age"] . "</td><td>" . $row["start_date"] . "</td><td>" . $row["salary"] . "</td></tr>";
+                                    }
+                                } else {
+                                    echo "0 results";
+                                }
+                                $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -541,84 +580,12 @@ require './configs/database.php';
 
     <script src="./assets/js/jquery-3.7.1.min.js"></script>
     <script src="./assets/js/scripts.bundle.js"></script>
-
-    
+    <script src="./assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
         $(document).ready(function() {
-            $(".menu-link").accordion({
-                active: false
-            });
 
-            const data = [{
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    age: 28
-                },
-                {
-                    firstName: 'Jane',
-                    lastName: 'Smith',
-                    age: 34
-                },
-                {
-                    firstName: 'Sara',
-                    lastName: 'Brown',
-                    age: 22
-                }
-            ];
-
-            // กำหนด columns สำหรับ TanStack Table
-            const columns = [{
-                    accessorKey: 'firstName',
-                    header: 'First Name',
-                },
-                {
-                    accessorKey: 'lastName',
-                    header: 'Last Name',
-                },
-                {
-                    accessorKey: 'age',
-                    header: 'Age',
-                }
-            ];
-            // สร้างตารางโดยใช้ TanStack Table
-            const table = new window["@tanstack/table-core"].Table({
-                data,
-                columns,
-                getCoreRowModel: window["@tanstack/table-core"].getCoreRowModel(),
-            });
-
-            // ฟังก์ชันในการสร้าง HTML สำหรับแสดงผลตาราง
-            function renderTable() {
-                let tableHtml = '<table><thead><tr>';
-
-                // สร้างหัวตาราง
-                table.getHeaderGroups().forEach(headerGroup => {
-                    headerGroup.headers.forEach(header => {
-                        tableHtml += `<th>${header.column.columnDef.header}</th>`;
-                    });
-                });
-
-                tableHtml += '</tr></thead><tbody>';
-
-                // สร้างแถวข้อมูล
-                table.getRowModel().rows.forEach(row => {
-                    tableHtml += '<tr>';
-                    row.getVisibleCells().forEach(cell => {
-                        tableHtml += `<td>${cell.getValue()}</td>`;
-                    });
-                    tableHtml += '</tr>';
-                });
-
-                tableHtml += '</tbody></table>';
-
-                // นำตารางไปแสดงใน div ที่กำหนด
-                $('#table-container').html(tableHtml);
-            }
-
-            // เรียกฟังก์ชันเพื่อแสดงผลตาราง
-            renderTable();
-
+            $('#example').DataTable({});
 
         });
 
