@@ -17,13 +17,15 @@
     <script src="./assets/plugins/global/plugins.bundle.js"></script>
     <script src="./assets/js/scripts.bundle.js"></script>
 
+    <!-- tabulator-tables -->
+    <link rel="stylesheet" href="./node_modules/tabulator-tables/dist/css/tabulator.min.css">
+    <script src="./node_modules/tabulator-tables/dist/js/tabulator.min.js"></script>
+
+    <!-- luxon -->
+    <script src="./node_modules/luxon/build/global/luxon.min.js"></script>
+
     <!-- jquery -->
     <script src="./assets/js/jquery-3.7.1.min.js"></script>
-
-    <!-- ag-grid -->
-    <link rel="stylesheet" type="text/css" href="./node_modules/ag-grid-community/styles/ag-grid.min.css">
-    <link rel="stylesheet" type="text/css" href="./node_modules/ag-grid-community/styles/ag-theme-alpine.min.css">
-    <script src="./node_modules/ag-grid-community/dist/ag-grid-community.min.js"></script>
 
     <!-- jkanban -->
     <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/jkanban/jkanban.bundle.css" />
@@ -39,10 +41,12 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/custom.css?version=4" />
 
     <style>
-        .view-container {
-            display: none;
+        #example-table {
+            width: 100%;
+            margin: 20px 0;
         }
     </style>
+
 </head>
 
 <body>
@@ -63,19 +67,13 @@
         <div class="tab-content" id="myTabContent">
             <!-- Table View -->
             <div class="tab-pane fade show active view-container" id="table-view" role="tabpanel">
-                <div class="test-container">
-                    <div class="test-header">
-                        <div class="example-section">
-                            <button onclick="saveState()">Save State</button>
-                            <button onclick="restoreState()">Restore State</button>
-                            <button onclick="resetState()">Reset State</button>
-                        </div>
-                    </div>
-                    <div class="ag-theme-alpine" style="height: 400px;">
-                        <!-- Your Data Grid container -->
-                        <div id="myGrid" class="ag-theme-quartz" style="height: 500px"></div>
-                    </div>
-                </div>
+
+
+
+                <div id="example-table"></div>
+
+                <button id="add-row" class="btn btn-primary mt-3">Add Row</button>
+
             </div>
             <!-- Kanban View -->
             <div class="tab-pane fade view-container" id="kanban-view" role="tabpanel">
@@ -89,96 +87,65 @@
     </div>
 
     <script>
-        const columnDefs = [{
-                field: "athlete"
-            },
-            {
-                field: "age"
-            },
-            {
-                field: "country"
-            },
-            {
-                field: "sport"
-            },
-            {
-                field: "year"
-            },
-            {
-                field: "date"
-            },
-            {
-                field: "gold"
-            },
-            {
-                field: "silver"
-            },
-            {
-                field: "bronze"
-            },
-            {
-                field: "total"
-            },
-        ];
-
-        let gridApi;
-
-        const gridOptions = {
-            pagination: true,
-            paginationPageSize: 10,
-            paginationPageSizeSelector: [10, 50, 100, 200],
-            defaultColDef: {
-                width: 100,
-                enableRowGroup: true,
-                enablePivot: true,
-                enableValue: true,
-            },
-            autoGroupColumnDef: {
-                minWidth: 200,
-            },
-            sideBar: {
-                toolPanels: ["columns"],
-            },
-            rowGroupPanelShow: "always",
-            pivotPanelShow: "always",
-            // debug: true,
-            columnDefs: columnDefs,
-            rowData: null,
-        };
-
-        function saveState() {
-            window.colState = gridApi.getColumnState();
-            console.log("column state saved");
-        }
-
-        function restoreState() {
-            if (!window.colState) {
-                console.log("no columns state to restore by, you must save state first");
-                return;
-            }
-            gridApi.applyColumnState({
-                state: window.colState,
-                applyOrder: true,
+        document.addEventListener("DOMContentLoaded", function() {
+            var table = new Tabulator("#example-table", {
+                height: "311px",
+                movableColumns: true, // สามารถย้ายคอลัมน์
+                layout: "fitColumns", // ปรับความกว้างของคอลัมน์ให้อัตโนมัติ
+                columns: [{
+                        title: "ID",
+                        field: "id",
+                        width: 50
+                    },
+                    {
+                        title: "Name",
+                        field: "name",
+                        editor: "input"
+                    }, // แก้ไขชื่อในคอลัมน์
+                    {
+                        title: "Gender",
+                        field: "gender",
+                        editor: "select", // ใช้ select ในการแก้ไข
+                        editorParams: {
+                            values: {
+                                "male": "Male",
+                                "female": "Female"
+                            }
+                        }
+                    },
+                    {
+                        title: "Birthdate",
+                        field: "birthdate",
+                        formatter: "datetime", // ใช้ formatter ในการแสดงวันที่
+                        formatterParams: {
+                            outputFormat: "MM/dd/yyyy",
+                            invalidPlaceholder: "Invalid Date",
+                        },
+                        editor: "input" // แก้ไขข้อมูลด้วย input
+                    },
+                    {
+                        title: "Salary",
+                        field: "salary",
+                        formatter: "money", // จัดการฟอร์แมตตัวเลขให้เป็นเงิน
+                        editor: "input"
+                    }
+                ]
             });
-            console.log("column state restored");
-        }
 
-        function resetState() {
-            gridApi.resetColumnState();
-            console.log("column state reset");
-        }
+            // โหลดข้อมูลจากฐานข้อมูลผ่าน AJAX
+            table.setData("data.php");
 
-        // setup the grid after the page has finished loading
-        document.addEventListener("DOMContentLoaded", () => {
-            const gridDiv = document.querySelector("#myGrid");
-            gridApi = agGrid.createGrid(gridDiv, gridOptions);
-
-            fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
-                .then((response) => response.json())
-                .then((data) => gridApi.setGridOption("rowData", data));
+            fetch("data.php")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // ตรวจสอบข้อมูล JSON ที่ได้
+                table.setData(data); // ตั้งค่าข้อมูลให้กับ Tabulator
+            })
+            .catch(error => console.error("Error fetching data:", error));
         });
-    </script>
 
+        
+    </script>
 </body>
 
 </html>
