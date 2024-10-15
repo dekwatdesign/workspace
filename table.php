@@ -4,200 +4,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Icon and Emoji Selector Popup</title>
+    <title>Multiple View Tabs</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/logo/favicon-16x16.png">
+    <link rel="manifest" href="./assets/logo/site.webmanifest">
+
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="./assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="./assets/plugins/global/plugins.bundle.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.bundle.css" />
+    <script src="./assets/plugins/global/plugins.bundle.js"></script>
+    <script src="./assets/js/scripts.bundle.js"></script>
+
+    <!-- jquery -->
+    <script src="./assets/js/jquery-3.7.1.min.js"></script>
+
+    <!-- ag-grid -->
+    <link rel="stylesheet" type="text/css" href="./node_modules/ag-grid-community/styles/ag-grid.min.css">
+    <link rel="stylesheet" type="text/css" href="./node_modules/ag-grid-community/styles/ag-theme-alpine.min.css">
+    <script src="./node_modules/ag-grid-community/dist/ag-grid-community.min.js"></script>
+
+    <!-- jkanban -->
+    <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/jkanban/jkanban.bundle.css" />
+    <script src="./assets/plugins/custom/jkanban/jkanban.bundle.js"></script>
+
+    <!-- fullcalendar -->
+    <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" />
+    <script src="./assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 
     <!-- Modified -->
-    <link href="./assets/css/fontawesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/fonts.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/custom.css?version=4" />
 
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.6.3/css/colReorder.dataTables.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/colreorder/1.6.3/js/dataTables.colReorder.min.js"></script>
+    <style>
+        .view-container {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <script>
-        var defaultThemeMode = "light";
-        var themeMode;
-        if (document.documentElement) {
-            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
-                themeMode =
-                    document.documentElement.getAttribute("data-bs-theme-mode");
-            } else {
-                if (localStorage.getItem("data-bs-theme") !== null) {
-                    themeMode = localStorage.getItem("data-bs-theme");
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            if (themeMode === "system") {
-                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ?
-                    "dark" :
-                    "light";
-            }
-            document.documentElement.setAttribute("data-bs-theme", themeMode);
-        }
-    </script>
 
-    <div class="container">
-        <table id="editableTable">
-            <thead>
-                <tr>
-                    <th>ชื่อ</th>
-                    <th>
-                        <a class="w-100"
-                            data-kt-menu-trigger="click"
-                            data-kt-menu-placement="bottom-start"
-                            data-kt-menu-offset="0,5">
-                            ประเภท
-                        </a>
-
-                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_select2">
-                            <div class="px-7 py-5">
-                                <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                            </div>
-                            <div class="separator border-gray-200"></div>
-                            <div class="px-7 py-5">
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Status:</label>
-                                    <div>
-                                        <select class="form-select form-select-solid" multiple data-kt-select2="true" multiple data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_select2" data-allow-clear="true">
-                                            <option></option>
-                                            <option value="1">Approved</option>
-                                            <option value="2">Pending</option>
-                                            <option value="2">In Process</option>
-                                            <option value="2">Rejected</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Member Type:</label>
-                                    <div class="d-flex">
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                            <input class="form-check-input" type="checkbox" value="1" />
-                                            <span class="form-check-label">
-                                                Author
-                                            </span>
-                                        </label>
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="2" checked="checked" />
-                                            <span class="form-check-label">
-                                                Customer
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Notifications:</label>
-                                    <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                        <label class="form-check-label">
-                                            Enabled
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                </div>
-                            </div>
+    <div class="container mt-4">
+        <h1>ทดสอบ Multiple View</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-view" type="button" role="tab">Table View</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="kanban-tab" data-bs-toggle="tab" data-bs-target="#kanban-view" type="button" role="tab">Kanban View</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar-view" type="button" role="tab">Calendar View</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- Table View -->
+            <div class="tab-pane fade show active view-container" id="table-view" role="tabpanel">
+                <div class="test-container">
+                    <div class="test-header">
+                        <div class="example-section">
+                            <button onclick="saveState()">Save State</button>
+                            <button onclick="restoreState()">Restore State</button>
+                            <button onclick="resetState()">Reset State</button>
                         </div>
-                    </th>
-                    <th>อาชีพ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td data-field="name">สมชาย</td>
-                    <td data-field="category">IT</td>
-                    <td data-field="job">
-                        <div class="m-0">
-                            <a class=""
-                                data-kt-menu-trigger="click"
-                                data-kt-menu-placement="bottom-start"
-                                data-kt-menu-offset="0,5">
-                                Click to open menu
-                            </a>
-
-                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_select2">
-                                <div class="px-7 py-5">
-                                    <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                </div>
-                                <div class="separator border-gray-200"></div>
-                                <div class="px-7 py-5">
-                                    <div class="mb-10">
-                                        <label class="form-label fw-semibold">Status:</label>
-                                        <div>
-                                            <select class="form-select form-select-solid" multiple data-kt-select2="true" multiple data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_select2" data-allow-clear="true">
-                                                <option></option>
-                                                <option value="1">Approved</option>
-                                                <option value="2">Pending</option>
-                                                <option value="2">In Process</option>
-                                                <option value="2">Rejected</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-10">
-                                        <label class="form-label fw-semibold">Member Type:</label>
-                                        <div class="d-flex">
-                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                <input class="form-check-input" type="checkbox" value="1" />
-                                                <span class="form-check-label">
-                                                    Author
-                                                </span>
-                                            </label>
-                                            <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="2" checked="checked" />
-                                                <span class="form-check-label">
-                                                    Customer
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-10">
-                                        <label class="form-label fw-semibold">Notifications:</label>
-                                        <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                            <label class="form-check-label">
-                                                Enabled
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                        <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-field="name">สมศรี</td>
-                    <td data-field="category">Design</td>
-                    <td data-field="job">นักออกแบบ</td>
-                </tr>
-            </tbody>
-        </table>
-
+                    </div>
+                    <div class="ag-theme-alpine" style="height: 400px;">
+                        <!-- Your Data Grid container -->
+                        <div id="myGrid" class="ag-theme-quartz" style="height: 500px"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Kanban View -->
+            <div class="tab-pane fade view-container" id="kanban-view" role="tabpanel">
+                <div id="myKanban"></div>
+            </div>
+            <!-- Calendar View -->
+            <div class="tab-pane fade view-container" id="calendar-view" role="tabpanel">
+                <div id="calendar"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        var hostUrl = "assets/";
-    </script>
+        const columnDefs = [{
+                field: "athlete"
+            },
+            {
+                field: "age"
+            },
+            {
+                field: "country"
+            },
+            {
+                field: "sport"
+            },
+            {
+                field: "year"
+            },
+            {
+                field: "date"
+            },
+            {
+                field: "gold"
+            },
+            {
+                field: "silver"
+            },
+            {
+                field: "bronze"
+            },
+            {
+                field: "total"
+            },
+        ];
 
-    <script src="./assets/plugins/global/plugins.bundle.js"></script>
-    <script src="./assets/js/scripts.bundle.js"></script>
+        let gridApi;
+
+        const gridOptions = {
+            pagination: true,
+            paginationPageSize: 10,
+            paginationPageSizeSelector: [10, 50, 100, 200],
+            defaultColDef: {
+                width: 100,
+                enableRowGroup: true,
+                enablePivot: true,
+                enableValue: true,
+            },
+            autoGroupColumnDef: {
+                minWidth: 200,
+            },
+            sideBar: {
+                toolPanels: ["columns"],
+            },
+            rowGroupPanelShow: "always",
+            pivotPanelShow: "always",
+            // debug: true,
+            columnDefs: columnDefs,
+            rowData: null,
+        };
+
+        function saveState() {
+            window.colState = gridApi.getColumnState();
+            console.log("column state saved");
+        }
+
+        function restoreState() {
+            if (!window.colState) {
+                console.log("no columns state to restore by, you must save state first");
+                return;
+            }
+            gridApi.applyColumnState({
+                state: window.colState,
+                applyOrder: true,
+            });
+            console.log("column state restored");
+        }
+
+        function resetState() {
+            gridApi.resetColumnState();
+            console.log("column state reset");
+        }
+
+        // setup the grid after the page has finished loading
+        document.addEventListener("DOMContentLoaded", () => {
+            const gridDiv = document.querySelector("#myGrid");
+            gridApi = agGrid.createGrid(gridDiv, gridOptions);
+
+            fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
+                .then((response) => response.json())
+                .then((data) => gridApi.setGridOption("rowData", data));
+        });
+    </script>
 
 </body>
 
