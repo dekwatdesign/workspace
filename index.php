@@ -18,7 +18,7 @@ require './configs/database.php';
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" />
     <link rel="stylesheet" type="text/css" href="./assets/plugins/custom/datatables/datatables.bundle.css" />
-    
+
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="./assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
@@ -318,29 +318,55 @@ require './configs/database.php';
                     <div class="sidebar-menus hover-scroll-y"
                         data-kt-scroll="true"
                         data-kt-scroll-height="auto"
-                        data-kt-scroll-wrappers="#kt_example_js_content"
+                        data-kt-scroll-wrappers="#kt_menu"
                         data-kt-scroll-dependencies="#kt_example_js_header, #kt_example_js_footer, #kt_header"
                         data-kt-scroll-offset="0px">
 
-                        <div id="kt_example_js_content" class="menu menu-rounded menu-column menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 menu-arrow-gray-500 menu-state-bg fw-semibold" data-kt-menu="true">
+                        <div id="kt_menu" class="menu menu-rounded menu-column menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 menu-arrow-gray-500 menu-state-bg fw-semibold" data-kt-menu="true">
                             <div class="menu-item menu-sub-indention menu-accordion" data-kt-menu-trigger="click">
-                                <a href="#" class="menu-link py-3">
+                                <div class="menu-link py-3">
                                     <span class="menu-icon">
                                         <i class="fa-solid fa-briefcase fs-3"></i>
                                     </span>
                                     <span class="menu-title">Teamspace</span>
-                                    <span>
-                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                    <div>
+                                        <button type="button"
+                                            class="btn btn-ssm btn-icon btn-secondary me-2"
+                                            data-kt-menu-trigger="click"
+                                            data-kt-menu-placement="bottom-end"
+                                            data-kt-menu-offset="30px, 30px"
+                                            data-kt-menu-static="true">
                                             <i class="fa-regular fa-ellipsis fs-3"></i>
                                         </button>
-                                    </span>
-                                    <span>
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px" data-kt-menu="true">
+                                            <div class="menu-item px-3">
+                                                <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
+                                            </div>
+
+                                            <div class="separator mb-3 opacity-75"></div>
+
+                                            <div class="menu-item px-3">
+                                                <a href="#" class="menu-link px-3">
+                                                    New Ticket
+                                                </a>
+                                            </div>
+
+                                            <div class="menu-item px-3">
+                                                <a href="#" class="menu-link px-3">
+                                                    New Customer
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!--end::Menu-->
+                                    </div>
+                                    <div>
                                         <button class="btn btn-ssm btn-icon btn-secondary me-2">
                                             <i class="fa-solid fa-plus fs-3"></i>
                                         </button>
-                                    </span>
+                                    </div>
                                     <span class="menu-arrow"></span>
-                                </a>
+                                </div>
 
                                 <div class="menu-sub menu-sub-accordion pt-3">
 
@@ -577,16 +603,17 @@ require './configs/database.php';
             </div>
         </div>
     </div>
-
     <script src="./assets/js/jquery-3.7.1.min.js"></script>
     <script src="./assets/js/scripts.bundle.js"></script>
     <script src="./assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script>
         $(document).ready(function() {
-
             $('#example').DataTable({});
-
+            KTMenu.createInstances();
+            var menuElement = document.querySelector("#kt_menu");
+            var menu = KTMenu.getInstance(menuElement);
+            menu.update();
         });
 
         $(".menu-item button").off().on('click', function(event) {
