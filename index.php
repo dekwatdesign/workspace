@@ -258,6 +258,15 @@ require './configs/database.php';
             height: calc(1em + 1rem + 2px);
             width: calc(1em + 1rem + 2px);
         }
+
+        .menu-sub-custom {
+            position: absolute;
+            right: 0px;
+            margin: 5px;
+        }
+        .menu-state-bg-light-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) i {
+            color: var(--bs-primary);
+        }
     </style>
 
     <style>
@@ -329,39 +338,29 @@ require './configs/database.php';
                                         <i class="fa-solid fa-briefcase fs-3"></i>
                                     </span>
                                     <span class="menu-title">Teamspace</span>
-                                    <div>
-                                        <button type="button"
-                                            class="btn btn-ssm btn-icon btn-secondary me-2"
-                                            data-kt-menu-trigger="click"
-                                            data-kt-menu-placement="bottom-end"
-                                            data-kt-menu-offset="30px, 30px"
-                                            data-kt-menu-static="true">
+                                    <div class="position-relative">
+                                        <button class="menu-options btn btn-ssm btn-icon btn-secondary me-2">
                                             <i class="fa-regular fa-ellipsis fs-3"></i>
                                         </button>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px" data-kt-menu="true">
+                                        <div class="menu menu-sub menu-sub-custom menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-auto min-w-150px mw-300px shadow-sm" data-kt-menu="true">
                                             <div class="menu-item px-3">
-                                                <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
+                                                <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-2">จัดการ</div>
                                             </div>
-
                                             <div class="separator mb-3 opacity-75"></div>
-
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-3">
-                                                    New Ticket
+                                                    123
                                                 </a>
                                             </div>
-
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-3">
                                                     New Customer
                                                 </a>
                                             </div>
                                         </div>
-                                        <!--end::Menu-->
                                     </div>
-                                    <div>
-                                        <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                    <div class="position-relative">
+                                        <button class="menu-options btn btn-ssm btn-icon btn-secondary me-2">
                                             <i class="fa-solid fa-plus fs-3"></i>
                                         </button>
                                     </div>
@@ -372,23 +371,60 @@ require './configs/database.php';
 
                                     <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
 
-                                        <a href="#" class="menu-link py-3">
+                                        <div class="menu-link py-3">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
                                             <span class="menu-title">Yuwa - IT</span>
-                                            <span>
-                                                <button class="btn btn-ssm btn-icon btn-secondary me-2">
+                                            <div class="position-relative">
+                                                <button class="menu-options btn btn-ssm btn-icon btn-secondary me-2">
                                                     <i class="fa-regular fa-ellipsis fs-3"></i>
                                                 </button>
-                                            </span>
+                                                <div class="menu menu-sub menu-sub-custom menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-auto min-w-150px mw-300px shadow-sm" data-kt-menu="true">
+                                                    <div class="menu-item px-3">
+                                                        <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-3">จัดการ</div>
+                                                    </div>
+                                                    <div class="separator mb-3 opacity-75"></div>
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link menu-manage px-3">
+                                                            <i class="ki-solid ki-fasten fs-3 w-25px"></i>
+                                                            <span>คัดลอกลิ้งค์</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            <i class="ki-solid ki-pencil fs-3 w-25px"></i>
+                                                            <span>เปลี่ยนชื่อ</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            <i class="ki-outline ki- ki-copy fs-3 w-25px"></i>
+                                                            <span>ทำซ้ำ</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            <i class="ki-outline ki- ki-trash fs-3 w-25px"></i>
+                                                            <span>ลบ</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="separator mb-3 opacity-75"></div>
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            <i class="ki-outline ki- ki-gear fs-3 w-25px"></i>
+                                                            <span>ตั้งค่า</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <span>
                                                 <button class="btn btn-ssm btn-icon btn-secondary me-2">
                                                     <i class="fa-solid fa-plus fs-3"></i>
                                                 </button>
                                             </span>
                                             <span class="menu-arrow"></span>
-                                        </a>
+                                        </div>
 
                                         <div class="menu-sub menu-sub-accordion pt-3">
 
@@ -609,16 +645,34 @@ require './configs/database.php';
 
     <script>
         $(document).ready(function() {
-            $('#example').DataTable({});
-            KTMenu.createInstances();
-            var menuElement = document.querySelector("#kt_menu");
-            var menu = KTMenu.getInstance(menuElement);
-            menu.update();
+
         });
 
-        $(".menu-item button").off().on('click', function(event) {
+        // เริ่มต้น KTMenu หลังจากโหลด DOM เสร็จ
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof KTMenu !== 'undefined') {
+                KTMenu.createInstances();
+                console.log('KTMenu initialized.');
+            } else {
+                console.error('KTMenu library is not loaded.');
+            }
+        });
+
+        // ปรับตัวจัดการคลิกเพื่อแสดงเมนูย่อย
+        $(".menu-item button.menu-options").off().on('click', function(event) {
             event.preventDefault();
             event.stopPropagation();
+            // แสดงหรือซ่อนเมนูย่อย
+            $(this).next('.menu-sub-dropdown').toggle();
+        });
+
+        // จัดการคลิกภายนอกเพื่อปิดเมนูย่อย
+        $(document).on('click', function(event) {
+            var $target = $(event.target);
+            // ตรวจสอบว่าการคลิกไม่ใช่ปุ่มหรือภายในเมนูย่อย
+            if (!$target.closest('.menu-item button.menu-options').length && !$target.closest('.menu-sub-dropdown').length) {
+                $('.menu-sub-dropdown').hide();
+            }
         });
 
         function toggleMenu() {
